@@ -1,0 +1,31 @@
+version: 2.1
+
+jobs:
+  deploy_app_to_railway:
+    docker:
+      - image: cimg/node:20.9
+    working_directory: ~/project
+    steps:
+      - checkout
+      - run: npm i -g @railway/cli
+      - run: railway --version
+      - run: |
+          if [ -z "$RAILWAY_TOKEN" ]; then
+            echo "RAILWAY_TOKEN no está definido en CircleCI > Project Settings > Environment Variables" && exit 1
+          fi
+          railway login --token "$RAILWAY_TOKEN"
+      - run: |
+          # Enlaza el proyecto (usa tu PROJECT_ID REAL)
+          railway link -p 0dfaa7e7-3371-47fa-b70d-7e8b103c3614
+          # Sube desde la carpeta correcta
+          cd bankchurn-api
+          # Despliega al servicio correcto
+          railway up --service "bountiful-grace" --detach
+
+workflows:
+  deploy:
+    jobs:
+      - deploy_app_to_railway:
+          filters:
+            branches:
+              only: main
