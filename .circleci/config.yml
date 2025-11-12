@@ -15,11 +15,8 @@ jobs:
           fi
           railway login --token "$RAILWAY_TOKEN"
       - run: |
-          # Enlaza el proyecto (usa tu PROJECT_ID REAL)
           railway link -p 0dfaa7e7-3371-47fa-b70d-7e8b103c3614
-          # Sube desde la carpeta correcta
           cd bankchurn-api
-          # Despliega al servicio correcto
           railway up --service "bountiful-grace" --detach
 
 workflows:
