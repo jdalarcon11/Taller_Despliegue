@@ -22,7 +22,6 @@ tags_only: &tags_only
       ignore: /.*/
     tags:
       only: /^.*/
->>>>>>> 7121286 (Actualizo config.yml desde la VM para el servivio bountiful-grace)
 
 workflows:
   deploy:
